@@ -4,11 +4,11 @@ name_list = None
 att_type_map = None
 
 
-def init():
+def init(f_name):
     global name_list, att_type_map
     name_list = []
     att_type_map = {}
-    f = open("../data/kddcup.names")
+    f = open(f_name)
     for line in f.readlines():
         arr = line.split(":")
         if len(arr) == 2:
@@ -17,4 +17,4 @@ def init():
 
 
 if __name__ == "names":
-    init()
+    init("../data/kddcup.names")

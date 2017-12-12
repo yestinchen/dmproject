@@ -1,9 +1,24 @@
 # some analysis about the dataset
 
 import names
+import iotool
+import os
+
+default_cache_file_prefix = "../data/cached_analysis_value_ranges"
 
 
 def value_ranges(input_f):
+    cache_path = "{0}-{1}".format(default_cache_file_prefix, input_f.split("/")[-1])
+    return iotool.cached_method(cache_path, value_ranges_read, input_f)
+
+
+def value_ranges_read(input_f):
+    """
+    Get value ranges for each attributes
+    :param input_f: input file
+    :return: a dict contains (attribute_name,[ordered value list])
+    """
+
     file = open(input_f)
     distinct_values_map = {}
     name_list = names.name_list
@@ -26,6 +41,16 @@ def value_ranges(input_f):
                 distinct_values.append(value)
     file.close()
 
+    return dict(map(lambda (k,v) : (k, sorted(v)), distinct_values_map.iteritems()))
+
+
+def print_att_map(distinct_values_map):
+    """
+    Print the map to the screen
+    :param distinct_values_map: input sorted map
+    :return: None
+    """
+    type_dict = names.att_type_map
     # sort the values.
     for (att,values) in distinct_values_map.items():
         sv = sorted(values)
@@ -34,5 +59,6 @@ def value_ranges(input_f):
         else :
             print("{0}, {1}".format(att, sv))
 
+
 if __name__ == "__main__":
-    value_ranges("../data/kddcup.data_10_percent_corrected")
+    print_att_map(value_ranges("../data/kddcup.data_10_percent_corrected"))
