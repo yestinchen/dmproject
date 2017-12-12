@@ -1,10 +1,10 @@
 # DMProject
 
-Just a little course project.
+Just a small course project.
 
 ## Structure
 
-The data can be downloaded from (dd)[...]
+The data can be downloaded from [here](http://archive.ics.uci.edu/ml/machine-learning-databases/kddcup99-mld/).
 
 Folders:
 * `data`: put all the datasets, listed as follows:
