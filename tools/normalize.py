@@ -41,6 +41,8 @@ def min_max_normalize(input_name, output_suffix):
                         output_f.write("0,")
                 else:
                     output_f.write("{0},".format(val))
+            # write class label.
+            output_f.write(val_arr[-1])
             output_f.write("\n")
 
 

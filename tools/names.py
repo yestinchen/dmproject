@@ -16,5 +16,5 @@ def init(f_name):
             att_type_map[arr[0]] = arr[1].strip()[:-1]
 
 
-if __name__ == "names":
+if __name__ == "names" or __name__ == "tools.names":
     init("../data/kddcup.names")
