@@ -62,4 +62,4 @@ class KnnProcessor:
 if __name__ == '__main__':
     # print(get_most_frequent_label([(1,'a'), (2, 'b'), (3, 'c'), (3, 'c')]))
     knnProcessor = KnnProcessor(100)
-    knnProcessor.stream_process("../data/kddcup.data_10_percent_corrected.minmax")
+    knnProcessor.stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled")
