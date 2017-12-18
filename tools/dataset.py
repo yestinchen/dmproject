@@ -28,7 +28,7 @@ class DataSet:
             raise StopIteration
         else:
             self.counter += 1
-            split = line.strip().replace(".", "").split(",")
+            split = line.strip().split(",")
             values = []
             for index, att in enumerate(self.name_list):
                 try:
@@ -45,8 +45,38 @@ class DataSet:
             return values
 
 
+class NumericSet:
+    """
+    data set contains all numeric values.
+    Just remove all the categorical values.
+    """
+    def __init__(self, dataset, keepcol = []):
+        self.dataset = dataset
+        self.keepcol = keepcol
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        record = self.dataset.next()
+        if record is None:
+            raise StopIteration
+        else:
+            return numeric_filter(record, self.keepcol)
+
+
+def numeric_filter(record, keep_col=[]):
+        newrecord = []
+        for (index, value) in enumerate(record):
+            if index in keep_col or not isinstance(value, str):
+                newrecord.append(value)
+        return newrecord
+
+
 if __name__ == '__main__':
-    for item in DataSet("../data/kddcup.data_10_percent_corrected"):
-        pass
-    # for item in DataSet("../data/kddcup.data_10_percent_corrected", 10):
-    #     print(item)
+    # for item in DataSet("../data/kddcup.data_10_percent_corrected"):
+    #     pass
+    for item in names.name_list:
+        print(item, names.att_type_map[item])
+    for item in NumericSet(DataSet("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 10), [41]):
+        print(item)
