@@ -36,7 +36,8 @@ class AccuracyBufferedReporter:
         self.actual_buffer = {}
         self.classify_buffer = {}
         self.all_labels_so_far = []
-        self.last_watermark = 0
+        self.last_watermark = 1
+        self.last_cached_novel = None
 
     def preset(self, id, value):
         """
@@ -48,6 +49,7 @@ class AccuracyBufferedReporter:
         self.actual_buffer[id] = value
 
     def watermark(self, watermark):
+        self.last_cached_novel = None
         for i in [self.last_watermark, watermark]:
             if self.actual_buffer[i] not in self.all_labels_so_far:
                 self.all_labels_so_far.append(self.actual_buffer[i])
@@ -57,7 +59,11 @@ class AccuracyBufferedReporter:
         if value == self.actual_buffer[id]:
             self.accurate_count += 1
         elif novel and self.classify_buffer[id] not in self.all_labels_so_far:
-            self.accurate_count += 1
+            if self.last_cached_novel is None:
+                self.last_cached_novel = self.classify_buffer.get(id)
+                self.accurate_count += 1
+            elif self.last_cached_novel == self.classify_buffer.get(id):
+                self.accurate_count += 1
         else:
             print("should be : {0}, but classified as: {1}, novel = {2}".format(
                 self.actual_buffer[id], value, novel))

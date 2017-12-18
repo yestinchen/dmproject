@@ -9,6 +9,7 @@
 
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import euclidean_distances
+import numpy
 from tools.dataset import DataSet, NumericSet, numeric_filter
 from reporter import AccuracyBufferedReporter
 
@@ -36,6 +37,8 @@ class ECSMiner:
         self.label_buffer = []
         # ensemble size
         self.M = 6
+        # last trait
+        self.last_trait = 0
         # reporter
         self.reporter = AccuracyBufferedReporter()
 
@@ -57,7 +60,9 @@ class ECSMiner:
                     # print("training a chunk, cluster num :" , self.K)
                     # train and
                     new_model = self.pseudopoints(self.labeled, self.K)
-                    # print("new model: ", new_model)
+                    #print("new model: ", new_model)
+                    # print("processed: ", self.Time)
+                    self.reporter.report()
                     self.models.append(new_model)
                     if len(self.models) > self.M:
                         self.models = self.models[len(self.models) - self.M:]
@@ -115,13 +120,46 @@ class ECSMiner:
             fout = False
         self.filter_buffer()
         if fout:
-            # print("regard as foutlier")
+            # print("regard as foutlier", len(self.buf), self.Time)
             self.buf.append([self.Time, query])
             if len(self.buf) > self.q and self.last_trait + self.q <= self.Time:
                 self.last_trait = self.Time
                 novel = self.detect_novel_class()
                 if novel:
-                    self.remove_novel()
+                    self.classify_and_remove_novel()
+
+    def classify_and_remove_novel(self):
+        for item in self.buf:
+            self.reporter.verify(item[0], value = None, novel= True)
+        self.reporter.watermark(self.buf[-1][0])
+        self.buf = []
+
+    def detect_novel_class(self):
+        # print("detecting novel class:")
+        cluster_num = self.K * len(self.buf) / self.S
+        rawpoints = map(lambda x : x[1], self.buf)
+        ppoints = self.pseudopoints(rawpoints, cluster_num)
+        new_class_vote = 0
+        for model in self.models:
+            for index, ppoint in enumerate(ppoints):
+                # compute q-NSC
+                total_distance_between_foutlier = 0.0
+                for index2, ppoint2 in enumerate(ppoints):
+                    if index != index2:
+                        this_distance = euclidean_distances([ppoint[1]], [ppoint2[1]])[0][0]
+                        total_distance_between_foutlier += this_distance
+                mean_distance_between_foutlier = total_distance_between_foutlier / len(ppoints) - 1
+                minimum_distance_to_class = None
+                for pcpoint in model:
+                    this_distance = euclidean_distances([ppoint[1]], [pcpoint[1]])[0][0]
+                    if minimum_distance_to_class is None or minimum_distance_to_class > this_distance:
+                        minimum_distance_to_class = this_distance
+                qNSC = (minimum_distance_to_class - mean_distance_between_foutlier) / \
+                       max(minimum_distance_to_class, mean_distance_between_foutlier)
+                if qNSC > 0 and ppoint[0] > self.q:
+                    new_class_vote += 1
+        # print("new class vote", new_class_vote)
+        return True if new_class_vote == len(self.models) else False
 
     def foutlier(self, query):
         for model in self.models:
@@ -160,10 +198,10 @@ class ECSMiner:
         # remove #1 scenario, according to the age.
         if len(self.buf) > 0:
             start_p = -1
-            while start_p +1 < len(self.buf) and self.buf[start_p + 1][0] > self.Time - self.S:
-                start_p += 1
-            self.buf = self.buf[start_p:]
+            # while start_p +1 < len(self.buf) and self.buf[start_p + 1][0] < self.Time - self.S:
+            #     start_p += 1
+            # self.buf = self.buf[start_p:]
         #
 
 if __name__ == '__main__':
-    ECSMiner().stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled")
+    ECSMiner().stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 100000)
