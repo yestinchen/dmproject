@@ -65,7 +65,7 @@ class AccuracyBufferedReporter:
             elif self.last_cached_novel == self.classify_buffer.get(id):
                 self.accurate_count += 1
         else:
-            print("should be : {0}, but classified as: {1}, novel = {2}".format(
+            print(">>>>>>>>>>>>>>>>>should be : {0}, but classified as: {1}, novel = {2}".format(
                 self.actual_buffer[id], value, novel))
 
     def report(self, output_file = None):

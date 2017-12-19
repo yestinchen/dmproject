@@ -43,6 +43,7 @@ class ECSMiner:
         self.reporter = AccuracyBufferedReporter()
 
     def stream_process(self, input_f, nums=None):
+        # 41 here means we want to keep the class column
         for record in NumericSet(DataSet(input_f, nums), [41]):
             self.Time += 1
             # preset the actual label.
