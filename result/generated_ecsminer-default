@@ -1,0 +1,153 @@
+accuracy: 0.9595, total: 2000
+accurate count: 1919, inaccurate: 81
+time: 1.46837930667, total: 2000
+accuracy: 0.965, total: 4000
+accurate count: 3860, inaccurate: 140
+time: 13.5309909333, total: 4000
+accuracy: 0.9695, total: 6000
+accurate count: 5817, inaccurate: 183
+time: 34.7342702933, total: 6000
+accuracy: 0.972375, total: 8000
+accurate count: 7779, inaccurate: 221
+time: 65.34177792, total: 8000
+accuracy: 0.9741, total: 10000
+accurate count: 9741, inaccurate: 259
+time: 106.117667413, total: 10000
+accuracy: 0.976, total: 12000
+accurate count: 11712, inaccurate: 288
+time: 156.517978453, total: 12000
+accuracy: 0.977, total: 14000
+accurate count: 13678, inaccurate: 322
+time: 216.057983573, total: 14000
+accuracy: 0.977875, total: 16000
+accurate count: 15646, inaccurate: 354
+time: 275.30413568, total: 16000
+accuracy: 0.978055555556, total: 18000
+accurate count: 17605, inaccurate: 395
+time: 335.230869333, total: 18000
+accuracy: 0.9792, total: 20000
+accurate count: 19584, inaccurate: 416
+time: 394.015080107, total: 20000
+accuracy: 0.979727272727, total: 22000
+accurate count: 21554, inaccurate: 446
+time: 454.261395627, total: 22000
+accuracy: 0.980166666667, total: 24000
+accurate count: 23524, inaccurate: 476
+time: 514.131982933, total: 24000
+accuracy: 0.980576923077, total: 26000
+accurate count: 25495, inaccurate: 505
+time: 574.986901333, total: 26000
+accuracy: 0.98075, total: 28000
+accurate count: 27461, inaccurate: 539
+time: 640.795632213, total: 28000
+accuracy: 0.981133333333, total: 30000
+accurate count: 29434, inaccurate: 566
+time: 701.33223296, total: 30000
+accuracy: 0.981125, total: 32000
+accurate count: 31396, inaccurate: 604
+time: 762.25205376, total: 32000
+accuracy: 0.981323529412, total: 34000
+accurate count: 33365, inaccurate: 635
+time: 821.713608533, total: 34000
+accuracy: 0.981638888889, total: 36000
+accurate count: 35339, inaccurate: 661
+time: 881.33531136, total: 36000
+accuracy: 0.981921052632, total: 38000
+accurate count: 37313, inaccurate: 687
+time: 942.931684267, total: 38000
+accuracy: 0.9821, total: 40000
+accurate count: 39284, inaccurate: 716
+time: 1003.88470229, total: 40000
+accuracy: 0.982357142857, total: 42000
+accurate count: 41259, inaccurate: 741
+time: 1072.00793344, total: 42000
+accuracy: 0.982454545455, total: 44000
+accurate count: 43228, inaccurate: 772
+time: 1142.5600064, total: 44000
+accuracy: 0.982282608696, total: 46000
+accurate count: 45185, inaccurate: 815
+time: 1226.47321643, total: 46000
+accuracy: 0.982395833333, total: 48000
+accurate count: 47155, inaccurate: 845
+time: 1304.34411307, total: 48000
+accuracy: 0.98218, total: 50000
+accurate count: 49109, inaccurate: 891
+time: 1376.34967125, total: 50000
+accuracy: 0.982096153846, total: 52000
+accurate count: 51069, inaccurate: 931
+time: 1442.41930752, total: 52000
+accuracy: 0.982148148148, total: 54000
+accurate count: 53036, inaccurate: 964
+time: 1508.732256, total: 54000
+accuracy: 0.982125, total: 56000
+accurate count: 54999, inaccurate: 1001
+time: 1577.30996352, total: 56000
+accuracy: 0.982086206897, total: 58000
+accurate count: 56961, inaccurate: 1039
+time: 1640.33673472, total: 58000
+accuracy: 0.982116666667, total: 60000
+accurate count: 58927, inaccurate: 1073
+time: 1702.71145771, total: 60000
+accuracy: 0.982290322581, total: 62000
+accurate count: 60902, inaccurate: 1098
+time: 1764.92889173, total: 62000
+accuracy: 0.98240625, total: 64000
+accurate count: 62874, inaccurate: 1126
+time: 1831.38183211, total: 64000
+accuracy: 0.982318181818, total: 66000
+accurate count: 64833, inaccurate: 1167
+time: 1901.01030699, total: 66000
+accuracy: 0.982220588235, total: 68000
+accurate count: 66791, inaccurate: 1209
+time: 1968.21539755, total: 68000
+accuracy: 0.982242857143, total: 70000
+accurate count: 68757, inaccurate: 1243
+time: 2033.2028352, total: 70000
+accuracy: 0.982097222222, total: 72000
+accurate count: 70711, inaccurate: 1289
+time: 2099.15008299, total: 72000
+accuracy: 0.982202702703, total: 74000
+accurate count: 72683, inaccurate: 1317
+time: 2163.33629739, total: 74000
+accuracy: 0.982144736842, total: 76000
+accurate count: 74643, inaccurate: 1357
+time: 2231.25647147, total: 76000
+accuracy: 0.982205128205, total: 78000
+accurate count: 76612, inaccurate: 1388
+time: 2300.15357483, total: 78000
+accuracy: 0.982225, total: 80000
+accurate count: 78578, inaccurate: 1422
+time: 2367.41565269, total: 80000
+accuracy: 0.982256097561, total: 82000
+accurate count: 80545, inaccurate: 1455
+time: 2435.892192, total: 82000
+accuracy: 0.982369047619, total: 84000
+accurate count: 82519, inaccurate: 1481
+time: 2500.92199253, total: 84000
+accuracy: 0.98238372093, total: 86000
+accurate count: 84485, inaccurate: 1515
+time: 2568.73994453, total: 86000
+accuracy: 0.982386363636, total: 88000
+accurate count: 86450, inaccurate: 1550
+time: 2637.27589333, total: 88000
+accuracy: 0.982388888889, total: 90000
+accurate count: 88415, inaccurate: 1585
+time: 2707.56555776, total: 90000
+accuracy: 0.982413043478, total: 92000
+accurate count: 90382, inaccurate: 1618
+time: 2776.10519211, total: 92000
+accuracy: 0.982542553191, total: 94000
+accurate count: 92359, inaccurate: 1641
+time: 2841.60210517, total: 94000
+accuracy: 0.982520833333, total: 96000
+accurate count: 94322, inaccurate: 1678
+time: 2909.82571861, total: 96000
+accuracy: 0.982591836735, total: 98000
+accurate count: 96294, inaccurate: 1706
+time: 2977.63390336, total: 98000
+accuracy: 0.98257, total: 100000
+accurate count: 98257, inaccurate: 1743
+time: 3043.69391744, total: 100000
+accuracy: 0.98257, total: 100000
+accurate count: 98257, inaccurate: 1743
+time: 3043.69442475, total: 100000

@@ -49,17 +49,19 @@ class KnnProcessor:
         return common
 
     def stream_process(self, input_name, lines = None, k = 1):
-        reporter = AccuracyReporter()
+        reporter = AccuracyReporter("../result/generated.knn.{0}-k{1}".format(self.training_size, k))
         for index, item in enumerate(DataSet(input_name, lines)):
             label = self.get_most_frequent_label(self.search_top_k(item[:-1], k))
             self.training_set.append(item)
             if self.training_size is not None and len(self.training_set) > self.training_size:
                 self.training_set.remove(self.training_set[0])
             reporter.track(index, item[-1], label)
+            if (index + 1) % 2000 == 0:
+                reporter.report()
         reporter.report()
 
 
 if __name__ == '__main__':
     # print(get_most_frequent_label([(1,'a'), (2, 'b'), (3, 'c'), (3, 'c')]))
-    knnProcessor = KnnProcessor(100)
+    knnProcessor = KnnProcessor(10)
     knnProcessor.stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 100000)

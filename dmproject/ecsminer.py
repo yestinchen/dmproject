@@ -24,7 +24,7 @@ class ECSMiner:
         self.labeled = []
         self.K = 50
         # instances # to start label novel class.
-        self.q = 50
+        self.q = 100
         # chunk size
         self.S = 2000
         # time starts from 0
@@ -40,7 +40,9 @@ class ECSMiner:
         # last trait
         self.last_trait = 0
         # reporter
-        self.reporter = AccuracyBufferedReporter()
+        # self.reporter = AccuracyBufferedReporter("../result/generated_ecsminer-default")
+        self.reporter = AccuracyBufferedReporter("../result/generated_ecsminer-no-novel")
+        # self.reporter = AccuracyBufferedReporter()
 
     def stream_process(self, input_f, nums=None):
         # 41 here means we want to keep the class column
@@ -67,6 +69,7 @@ class ECSMiner:
                     self.models.append(new_model)
                     if len(self.models) > self.M:
                         self.models = self.models[len(self.models) - self.M:]
+                    # print("model size: ", len(self.models))
                     self.labeled = []
         self.reporter.report()
 
@@ -125,6 +128,7 @@ class ECSMiner:
             self.buf.append([self.Time, query])
             if len(self.buf) > self.q and self.last_trait + self.q <= self.Time:
                 self.last_trait = self.Time
+                # print("detect novel class: ")
                 novel = self.detect_novel_class()
                 if novel:
                     self.classify_and_remove_novel()
@@ -174,9 +178,13 @@ class ECSMiner:
         result = []
         for model in self.models:
             distances = []
-            for pseudopoint in model:
-                # calculate distance , store distance & label
-                distances.append([euclidean_distances([pseudopoint[1]], [query])[0][0], pseudopoint[-1]])
+            pseudopoints = map(lambda x: x[1], model)
+            cal_results = euclidean_distances(pseudopoints, [query])
+            for index, cal_result in enumerate(cal_results):
+                distances.append([cal_result[0], model[index][-1]])
+            # for pseudopoint in model:
+            #     # calculate distance , store distance & label
+            #     distances.append([euclidean_distances([pseudopoint[1]], [query])[0][0], pseudopoint[-1]])
             distances.sort(cmp = lambda x, y: cmp(x[0], y[0]))
             result.append(distances[0][1])
         return self.vote(result)

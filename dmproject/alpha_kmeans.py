@@ -13,13 +13,14 @@ class Alpha:
 
     def __init__(self, max_points_num = 10, knn_k = 1, cluster_n = 50):
         self.Time = 0
-        self.reporter = AccuracyBufferedReporter()
         # label, model
         self.models = []
         self.buffer = []
         self.max_points_num = max_points_num
         self.Knn_K = knn_k
         self.cluster_n = cluster_n
+        self.reporter = AccuracyBufferedReporter("../result/generated.alpha.kmeans.{0}.knn_k{1}.cluster_n{2}"
+                                                 .format(self.max_points_num, self.Knn_K, self.cluster_n))
 
     def classify_using_min_distance(self, query):
         if len(self.models) == 0:
@@ -53,7 +54,7 @@ class Alpha:
 
     def add_instance(self, record):
         self.buffer.append(record)
-        if len(self.buffer) > 1000:
+        if len(self.buffer) > self.max_points_num:
             grouped_clusters = {}
             # split the buffer into different groups
             grouped_buffer = {}
@@ -80,11 +81,16 @@ class Alpha:
                         center = kmeans.cluster_centers_[l]
                         total_distance = 0.0
                         range_distance = 0.0
-                        for item in items:
-                            distance = euclidean_distances([center], [item])[0][0]
+                        cal_result = euclidean_distances([center], items)
+                        for distance in cal_result[0]:
                             if distance > range_distance:
                                 range_distance = distance
                             total_distance += distance
+                        # for item in items:
+                        #     distance = euclidean_distances([center], [item])[0][0]
+                        #     if distance > range_distance:
+                        #         range_distance = distance
+                        #     total_distance += distance
                         # store: weight, center, range_distance, mean_distance.
                         pseudopoints.append([weight, center, range_distance, total_distance / weight])
                 else:
@@ -116,4 +122,4 @@ class Alpha:
 
 
 if __name__ == "__main__":
-    Alpha(100).stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 100000)
+    Alpha(2000, cluster_n=50).stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 100000)
