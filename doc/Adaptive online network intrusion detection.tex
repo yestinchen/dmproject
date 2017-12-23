@@ -415,4 +415,17 @@
 	\bibliographystyle{splncs03}
 	\bibliography{reference}  
 	
+	\appendix
+	\section{Appendix} \label{appendix}
+	\subsection{Dataset}
+	The KDDCup'99 dataset contains several data files. The one we used in our experiments named $kddcup.data\_10\_percent.gz$. Online dataset can be found through the following link:
+	
+	http://archive.ics.uci.edu/ml/machine-learning-databases/kddcup99-mld/
+	
+	\subsection{Programs}
+	We implemented the experiments in python. The project contains two main modules:
+	\begin{enumerate}
+		\item \textit{tools}. This module contains preprocessing codes such as: normalization, feature selection, and result analysis tools.
+		\item \textit{dmproject}. This module contains the implementation of our method ($alpha_kmeans.py$), ECSMiner ($ecsminer.py$) and windowed k-NN method($knn.py$). Most of the parameters can be changed with input values.
+	\end{enumerate}
 \end{document}
