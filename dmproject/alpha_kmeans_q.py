@@ -11,7 +11,7 @@ class Alpha:
     plan a
     """
 
-    def __init__(self, max_points_num = 10, knn_k = 1, cluster_n = 50, model_num = 5):
+    def __init__(self, max_points_num = 10, knn_k = 1, cluster_n = 50):
         self.Time = 0
         # label, model
         self.models = []
@@ -19,9 +19,8 @@ class Alpha:
         self.max_points_num = max_points_num
         self.Knn_K = knn_k
         self.cluster_n = cluster_n
-        self.model_num = model_num
-        self.reporter = AccuracyBufferedReporter("../result/generated.alpha.kmeans.{0}.knn_k{1}.cluster_n{2}.model_n{3}"
-                                                 .format(self.max_points_num, self.Knn_K, self.cluster_n, self.model_num))
+        self.reporter = AccuracyBufferedReporter("../result/generated.alpha.kmeans.q.{0}.knn_k{1}.cluster_n{2}"
+                                                 .format(self.max_points_num, self.Knn_K, self.cluster_n))
 
     def classify_using_min_distance(self, query):
         if len(self.models) == 0:
@@ -29,11 +28,14 @@ class Alpha:
         min_distance = []
         for model in self.models:
             for label, points in model.items():
+                total_distance = 0.0
                 distance_matrix = euclidean_distances([query], map(lambda x: x[1], points))
                 ordered_matrix = sorted(distance_matrix[0])
                 mapped_matrix = map(lambda x: [label, x],
                                 ordered_matrix[:len(ordered_matrix) if len(ordered_matrix) < self.Knn_K else self.Knn_K])
-                min_distance += mapped_matrix
+                for m in mapped_matrix:
+                    total_distance += m[1]
+                min_distance += [[label, total_distance / len(mapped_matrix)]]
         sorted_distance = sorted(min_distance, key=lambda x: x[1])
         # print(sorted_distance)
         label_list = map(lambda x: x[0], sorted_distance[:len(sorted_distance) if len(sorted_distance) < self.Knn_K else self.Knn_K])
@@ -100,8 +102,8 @@ class Alpha:
                 grouped_clusters[label] = pseudopoints
             self.models.append(grouped_clusters)
             self.buffer=[]
-            if len(self.models) > self.model_num:
-                self.models = self.models[-self.model_num:]
+            if len(self.models) > 5:
+                self.models = self.models[-5:]
 
     def stream_process(self, input_f, nums=None):
         for record in NumericSet(DataSet(input_f, nums), [41]):
@@ -123,4 +125,4 @@ class Alpha:
 
 
 if __name__ == "__main__":
-    Alpha(2000, cluster_n=50, model_num=5, knn_k=3).stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 100000)
+    Alpha(2000, cluster_n=50).stream_process("../data/kddcup.data_10_percent_corrected.minmax.shuffled", 100000)
