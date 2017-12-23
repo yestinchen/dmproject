@@ -66,10 +66,9 @@
 		\label{fig:overview}
 	\end{figure}
 	
-	First, an overview of our online network intrusion detection system is given in figure~\ref{fig:overview}. The whole process contains three major parts, namely, feature extraction, normalization and online learning algorithm.
+	First, an overview of our online network intrusion detection system is given in \textbf{Figure~\ref{fig:overview}}. The whole process contains three major parts, namely, feature extraction, normalization and online learning algorithm.
 	
 	To simplify the problem, we assume that after each classification result is reported, the correct label for that record can be obtained through user/system feedbacks. Thus, different labels can be used for various type of intrusions. Records with correct labels can be used as training stream, to further improve classification accuracy of the system online.
-	
 	
 	\begin{table}
 		\centering
@@ -90,9 +89,9 @@
 	Table~\ref{table:notation} gives the notations that we use in the rest of this paper. Since our work is based on online data stream. A brief mathematical definition of data stream and related notations are given as follows:
 	
 	\begin{enumerate}
-		\item \textbf{\textit{Data stream}}. A data stream is a sequence of data records in an certain arrive order: \big\{$x_1$, $x_2$, ..., $x_i$\big\}, where $x_i$ is the most recent arrived data record, $x_1$ is the very first data record in the stream.
-		\item \textbf{\textit{Data record}}. A data record in a stream contains at least two values: one is the timestamp, which identify the time of record arrives. Another is the actual value of the record. Specifically, a vector contains different values for all the attributes.
-		\item \textbf{\textit{Feedback}}. After a data record arrives, classifications can be made immediately. To simplify the problem, we assume that a correct label of the record can be obtained right after the classification progress. Which means, when record $x_i$ arrives, the correct label of $x_{i-1}$ is already given through feedback.
+		\item \textbf{\textit{Data stream}}. A data stream is a sequence of data records in an certain arrive order: \big\{$x_1$, $x_2$, ..., $x_i$\big\}, where $x_i$ is the most recent arrived data record, and $x_1$ is the very first data record in the stream.
+		\item \textbf{\textit{Data record}}. A data record in a stream contains at least two values: (1) the timestamp, which identifies the record's time of arrival; (2) the actual value of the record, specifically a vector containing different values for all the attributes.
+		\item \textbf{\textit{Feedback}}. After a data record arrives, classifications can be made immediately. To simplify the problem, we assume that a correct label of the record can be obtained right after the classification process. This means when record $x_i$ arrives, the correct label of $x_{i-1}$ is already given through feedback.
 	\end{enumerate}
 	
 	\subsection{Normalization}
@@ -407,9 +406,9 @@
 		\item Accuracy improvement. We can see from the experiments although only kNN and kMeans are applied, we can get good results. Introducing more complex data mining algorithms may have a better accuracy.
 		\item Hybrid online learning methods. We can notice that two algorithms are used in this paper. To deal with data streams, trade-offs need to be made to deal with different aspect of problems. Hybrid methods are especially useful in dealing with such scenarios. Different strategies of combining methods is also another topic that worth study.
 		\item Stream data preprocessing. Preprocessing can also have influence on the final result. How to extract attributes online, and how to perform adaptive normalization methods are also key issues in online learning scenarios.
+		\item Handling delayed feedback. In our system, we make the assumption that a correct label of the record can be obtained right after the classification process completes. However, in real-world applications, feedback is less immediate and forthcoming. Different strategies for handling these delays and missing labels as well as the impact on accuracy and performance of the algorithm should be explored.
 	\end{enumerate}
-	
-	
+
 	\bibliographystyle{splncs03}
 	\bibliography{reference}  
 	
