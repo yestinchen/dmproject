@@ -65,11 +65,11 @@
 	
 	\subsubsection{Online Clustering}
 	
+	Online clustering faces many challenges unique to data stream mining algorithms. Such algorithms must deal with dynamic and unbounded data that arrives continuously and in any order. The data can be subject to concept drift and storing data object indefinitely is not practical or possible; data objects must be discarded, although storing a small portion of the data for a period of time is doable. There have been many different data stream clustering algorithms, each with different techniques and design choice at various stages. The first step is data abstraction, where the data is summary, compressed, partitioned or filtered via a data structure, window model or outlier detection scheme \cite{Silva2013}. This step is following by a offline clustering phase where an traditional offline clustering algorithm is applied on the subset of data, such as k-means or DBSCAN as well as variants of those algorithms, such as extended k-means and k-means++. One particularly noteworthy online clustering algorithm is StreamKM++ \cite{Ackermann2012}. 
+	
 	\subsubsection{Online Ensemble Learning}
 	
 	To overcome the problem of maintaining a large model for online data. Ensemble learning methods are proposed. According to the strategy, these methods can be grouped to chunk-based ensembles, online ensembles, and hybrid ensembles \cite{Sun2016}. Chunk-based ensemble methods using chunk as the basic unit to build models, while online ensembles update each learner in an online manner. For example, ECSMiner\cite{Masud2011} is one of the chunk-based methods, it first partition data stream into small chunks, build learning model for each chunk, and ensemble all the models for further use. Hybrid ensembles aim to combine these two different ensemble strategies, so to have the advantages in both. Besides ensemble strategies, data structures such as E-Tree \cite{Zhang2015} are also proposed to improve the efficiency of indexing for ensemble models. 
-
-	
 
 	\section{Adaptive Online Intrusion Detection} \label{Our Method}
 	
