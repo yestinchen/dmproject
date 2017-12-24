@@ -355,10 +355,10 @@
 			\label{fig:time:w}
 		\end{minipage}%
 	\end{figure}	
-	\textit{Figure~\ref{fig:accuracy:w}} and \textit{Figure~\ref{fig:time:w}} show the accuracy and time consumption with varying $w$ separately. Too small $w$ can lead to poor performance, but it can also speed up the algorithm. After some fixed value, $w$ won't influence much on both the performance and time consumption. This is because larger $w$ means less clustering times, meanwhile, the number of records that clustering method needs to process also increases. 
+	\textit{Figure~\ref{fig:accuracy:w}} and \textit{Figure~\ref{fig:time:w}} show the accuracy and time consumption when varying $w$ separately. Too small $w$ can lead to poor performance, but it can also speed up the algorithm. After some fixed value, $w$ won't influence much on both the performance and time consumption. This is because larger $w$ means less clustering times, meanwhile, the number of records that clustering method needs to process also increases. 
 	
 	\subsubsection{Varying $k$}
-	In comparison, different values of $k$ have less influence on both accuracy and time. \textit{Figure~\ref{fig:accuracy:k}} shows that larger $k$ values may lead to a worse accuracy at the beginning, but eventually, the overall performance won't differ much. Since $k$ value only being used in classification phase. When the number of total records is small, a smaller $k$ value would give us better classification results.
+	In comparison, different values of $k$ have less influence on both accuracy and time. \textit{Figure~\ref{fig:accuracy:k}} shows that larger $k$ values may lead to a worse accuracy at the beginning, but eventually, the overall performance won't differ much. Since $k$ value is only being used in classification phase. When the number of total records is small, a smaller $k$ value would give us better classification results.
 
 	\begin{figure}
 		\centering
@@ -377,7 +377,7 @@
 		\end{minipage}%
 	\end{figure}
 	\subsubsection{Varying $c$}
-	Different $c$ values means different number of clusters during point reducing phase. Smaller $c$ values can lead to faster speed during running, this can be verified from \textit{Figure~\ref{fig:time:c}}. \textit{Figure~\ref{fig:accuracy:c}} shows that if $c$ is too small, the accuracy could be very poor. This is because small $c$ value means less points after clustering. Since we're grouping records with same label together, some critical points in those labels which have larger number of records may be discarded. Classification result can be highly influenced by points in other labels. After a certain threshold, $c$ value won't influence much on accuracy.
+	Different $c$ values means different number of clusters during point reducing phase. Smaller $c$ values can lead to faster speed during runtime, this can be verified from \textit{Figure~\ref{fig:time:c}}. \textit{Figure~\ref{fig:accuracy:c}} shows that if $c$ is too small, the accuracy could be very poor. This is because small $c$ value means less points after clustering. Since we're grouping records with same label together, some critical points in those labels which have larger number of records may be discarded. Classification result can be highly influenced by points in other labels. After a certain threshold, $c$ value won't influence much on accuracy.
 	
 	\begin{figure}
 		\centering
@@ -396,7 +396,7 @@
 		\end{minipage}%
 	\end{figure}
 	\subsubsection{Varying $N$}
-	\textit{Figure~\ref{fig:accuracy:n}} shows that smaller the number of partitions we hold in memory, worse the accuracy is. $N$ can be regard as one of the most important parameters in this algorithm, since it can have big impacts on time consumption (\textit{Figure~\ref{fig:time:n}}). Normally, $N$ should be chosen according to different scenarios. Large $N$ can lead to slow adaption phases, while algorithm with small $N$ value can be highly adapted to data drift.
+	\textit{Figure~\ref{fig:accuracy:n}} shows that the smaller the number of partitions we hold in memory, worse the accuracy is. $N$ can be regarded as one of the most important parameters in this algorithm, since it can have big impacts on time consumption (\textit{Figure~\ref{fig:time:n}}). Normally, $N$ should be chosen according to different scenarios. Large $N$ can lead to slow adaption phases, while algorithm with small $N$ value can be highly adapted to data drift.
 	
 	\begin{figure}
 		\centering
@@ -419,7 +419,7 @@
 	
 	\subsection{Conclusion}
 
-	In this paper, we present an online network intrusion detection system. Moreover, an online learning algorithm is given to classify incoming data records. Our method combines kNN and KMeans++ algorithms. We use kNN to make classification while using kMeans++ to clustering raw data records to reduce the total number of points. Through experiments, we can see that our method has better accuracy than ECSMiner, but takes longer time. Time consumption can be reduced by choosing different parameters. A influence of varying values for different parameters are given in the experiment analysis, which can be helpful for choosing parameter values in different scenarios.
+	In this paper, we present an online network intrusion detection system. Moreover, an online learning algorithm is given to classify incoming data records. Our method combines kNN and KMeans++ algorithms. We use kNN for classification while using kMeans++ to clustering raw data records to reduce the total number of points. Through experiments, we can see that our method has better accuracy than ECSMiner, but takes longer time. Time consumption can be reduced by choosing different parameters. A influence of varying values for different parameters are given in the experiment analysis, which can be helpful for choosing parameter values in different scenarios.
 	
 	In general, most of the data mining algorithms are using one model to train and classify records with different labels. In our algorithm, we treat records with different labels separately, and use clustering method to reduce influence of outliers. This process can be regard as model ensemble. In stream data mining, since we want to learn most recent records incrementally, ensemble models can be very useful.
 	
@@ -427,9 +427,9 @@
 
 	We believe that there are still many problems can be addressed in online intrusion detection systems. Future works can be done in the following direction:
 	\begin{enumerate}
-		\item Speed improvement. Based on this paper, stream clustering methods, such as StreamKM++\cite{Ackermann2012}, CluStream can further applied. Stream clustering methods usually take less time than traditional methods. New data structure and techniques can also be introduced to speed up the whole process.
-		\item Accuracy improvement. We can see from the experiments although only kNN and kMeans are applied, we can get good results. Introducing more complex data mining algorithms may have a better accuracy.
-		\item Hybrid online learning methods. We can notice that two algorithms are used in this paper. To deal with data streams, trade-offs need to be made to deal with different aspect of problems. Hybrid methods are especially useful in dealing with such scenarios. Different strategies of combining methods is also another topic that worth study.
+		\item Speed improvement. Based on this paper, stream clustering methods, such as StreamKM++\cite{Ackermann2012}, CluStream can be further applied. Stream clustering methods usually take less time than traditional methods. New data structures and techniques can also be introduced to speed up the whole process.
+		\item Accuracy improvement. We can see from the experiments although only kNN and kMeans++ are applied, we can get good results. Introducing more complex data mining algorithms may have a better accuracy.
+		\item Hybrid online learning methods. We can notice that two algorithms are used in this paper. To deal with data streams, trade-offs need to be made to deal with different aspect of problems. Hybrid methods are especially useful in dealing with such scenarios. Different strategies of combining methods are also another topics that are worth studying.
 		\item Stream data preprocessing. Preprocessing can also have influence on the final result. How to extract attributes online, and how to perform adaptive normalization methods are also key issues in online learning scenarios.
 		\item Handling delayed feedback. In our system, we make the assumption that a correct label of the record can be obtained right after the classification process completes. However, in real-world applications, feedback is less immediate and forthcoming. Different strategies for handling these delays and missing labels as well as the impact on accuracy and performance of the algorithm should be explored.
 	\end{enumerate}
