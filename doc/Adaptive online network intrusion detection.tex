@@ -69,6 +69,8 @@
 	
 	To overcome the problem of maintaining a large model for online data. Ensemble learning was proposed. According to different ensemble strategy, these methods can be grouped to chunk-based ensembles, online ensembles, and hybrid ensembles \cite{Sun2016}. Chunk-based ensemble methods using chunk as the basic unit to build models, while online ensembles update each learner in an online manner. For example, ECSMiner\cite{Masud2011} is one of the chunk-based methods, it first partition data stream into small chunks, build learning model for each chunk, and ensemble all the models for further use. Hybrid ensembles aim to combine these two different ensemble strategies, so to have the advantages in both. Besides ensemble strategies, data structures such as E-Tree \cite{Zhang2015} are also proposed to improve the efficiency of indexing for ensemble models. 
 
+	
+
 	\section{Adaptive Online Intrusion Detection} \label{Our Method}
 	
 	In network intrusion detection systems (IDS), raw data can be collected using online sniffing. There are many techniques that can be used to monitor the network and collect traffic logs. Raw data collected from the network can be enormous in size, since the records contain detailed information about the network traffic in binary format. Only key attributes in these record are needed for further processing. This can be done by most of network traffic analysis tools.
