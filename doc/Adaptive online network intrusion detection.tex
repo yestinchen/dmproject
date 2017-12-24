@@ -117,24 +117,26 @@
 	\end{enumerate}
 	
 	\subsection{Normalization}
-	Attributes extracted from network data can have different value boundaries. In order to gain a better learning result, normalization needs to be made on incoming data stream. Not all normalization methods are suitable in online scenarios, since it is impossible to get all the statistical information before all data records are arrived. In this paper, min-max normalization is applied right after data record comes in. This is a reasonable method since most of the attributes boundaries are fixed, and can be pre-obtained from network protocols and standards.
+
+	Attributes extracted from network data can have different value boundaries. In order to gain a better learning result, normalization needs to be made on the incoming data stream. Not all normalization methods are suitable in online scenarios, since it is impossible to get all the statistical information before all data records have arrived. In this paper, min-max normalization is applied upon arrival of the data records. This is a reasonable method since most of the attributes boundaries are fixed, and can be predetermined from network protocols and standards.
 	
 	\subsection{Online Learning Algorithm}
-	Many online data mining algorithms can be applied to network intrusion detection systems. In order to achieve better performance and fast speed, Trade-offs need to be made during learning phase.
+
+	Many online data mining algorithms can be applied to network intrusion detection systems. In order to achieve better performance and speed, trade-offs need to be made during learning phase.
 	
-	\textit{Algorithm~\ref{algorithm:main}} gives the outline of our method. The algorithm starts with an initial set of partitions, $P$. This can be used to bootstrap the algorithm with a very small training set. In each partitions, the data points with same label are grouped together. Buffer $p_buffer$ keeps labeled data records. When a new data record arrives, a classification result can be made using existing $P$ partitions in memory. We assume that the actual label for the record can be received after the classification process. This process can be regard as feedback. The feedback for this data record can be assembled into current partition buffer, which can be used to classify future stream data.
+	\textit{Algorithm~\ref{algorithm:main}} gives the outline of our method. The algorithm starts with an initial set of partitions, $P$. This can be used to bootstrap the algorithm with a very small training set. In each partition, the data points with the same label are grouped together. Buffer $p_\text{buffer}$ keep labeled data records. When a new data record arrives, a classification result can be made using existing $P$ partitions in memory. We assume that the actual label for the record can be received after the classification process. This process can be regard as feedback. The feedback for this data record can be assembled into the current partition buffer, which can be used to classify future stream data.
 	
 	\begin{algorithm}
 		\caption{Alpha Algorithm} \label{algorithm:main}
 		\begin{algorithmic}
 			\REQUIRE data stream $S$
 			\STATE $P \gets$ the set of all initial partitions
-			\STATE $p_buffer \gets$ empty // current partition buffer
+			\STATE $p_\text{buffer} \gets$ empty // current partition buffer
 			\WHILE{$true$}
 			\STATE $x_i \gets $ the latest data record in $S$
 			\STATE $result \gets classify(x_i, P)$ //classify the result using partitions
 			\STATE $label \gets$ correct label given from users/systems
-			\STATE $addToPartition(p_buffer, x_i, label)$ 
+			\STATE $addToPartition(p_\text{buffer}, x_i, label)$ 
 			\ENDWHILE
 		\end{algorithmic}
 	\end{algorithm}
@@ -197,13 +199,13 @@
 	\begin{algorithm}
 		\caption{addToPartition Algorithm} \label{algorithm:clustering}
 		\begin{algorithmic}
-			\REQUIRE the record $x_i$, label $label$, current partition buffer $p_buffer$
-			\IF {$size(p_buffer) < w$}
-			\STATE {append $x_i$ to $p_buffer$}
+			\REQUIRE the record $x_i$, label $label$, current partition buffer $p_\text{buffer}$
+			\IF {$size(p_\text{buffer}) < w$}
+			\STATE {append $x_i$ to $p_\text{buffer}$}
 			\ELSE 
-			\STATE {group data records with same label together in $p_buffer$ } 
+			\STATE {group data records with same label together in $p_\text{buffer}$ } 
 			\STATE {$clustered\_partition \gets empty$ }
-			\FOR {$label, record\_list$ in $p_buffer$}
+			\FOR {$label, record\_list$ in $p_\text{buffer}$}
 			\STATE {$cluster\_result \gets clustering(record\_list, c)$}
 			\STATE {add $cluster\_result$ to $clustered\_partition$}
 			\ENDFOR
@@ -298,7 +300,7 @@
 	
 	We implemented other two methods as comparison: windowed k-NN method and ECSMiner. Windowed k-NN is adapted from k-NN method, with a fixed window size. In the experiments, we use two sets of k-NN parameters: kNN-100 denotes the k-NN method with a window size 100 and $k$=1, kNN-200 denotes the k-NN method witn a window size 2000 and $k$=1. ECSMiner is implemented as described in \cite{Masud2011}. The parameter settings are following (the same as default values used in \cite{Masud2011}):
 	\begin{enumerate}
-		\item number of pseudopoints per classifier $K$ = 50
+		\item number of pseudo-points per classifier $K$ = 50
 		\item minimum number of instances required to declare novel class $q$ = 50
 		\item model ensemble size $M$ = 6
 		\item chunk size $S$ = 2000
