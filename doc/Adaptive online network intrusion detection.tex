@@ -143,7 +143,7 @@
 	
 	\subsubsection{Classification}
 	
-	We assume that instances in a single class are independently identical distributed. Which means, instances that closed together are more likely belong to the same class. Under this assumption, k nearest neighbor method can be applied to our scenario.
+	We assume that instances in a single class are independently and identically distributed. Which means that instances close together are more likely to belong to the same class. Under this assumption, k nearest neighbor method can be applied to our scenario.
 	
 	For a given data record, $x_i$, the euclidean distance can be used to measure the closeness between other data records. Among all the $k$ nearest neighbor points, voting can be used to decide the final label for the record. \textit{Algorithm~\ref{algorithm:classification}} shows the major steps of this process.
 	
