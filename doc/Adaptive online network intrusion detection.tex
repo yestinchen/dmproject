@@ -141,8 +141,7 @@
 		\end{algorithmic}
 	\end{algorithm}
 	
-	\subsubsection{Classification}
-	
+	\subsubsection{Classification}	
 	We assume that instances in a single class are independently and identically distributed. Which means that instances close together are more likely to belong to the same class. Under this assumption, k nearest neighbor method can be applied to our scenario.
 	
 	For a given data record, $x_i$, the euclidean distance can be used to measure the closeness between other data records. Among all the $k$ nearest neighbor points, voting can be used to decide the final label for the record. \textit{Algorithm~\ref{algorithm:classification}} shows the major steps of this process.
@@ -216,7 +215,7 @@
 		\end{algorithmic}
 	\end{algorithm}
 	
-	Based on lemma~\ref{lemma}, we can use clustering method to reduce the number of points that need to be stored in memory. Center points of clusters can be regard as representative of original points in the same cluster. The main steps are listed in algorithm~\ref{algorithm:clustering}. We gather the record into current partition buffer, and perform data reduction once the buffer is full. Data reduction is being performed by clustering method, specifically, KMeans++\cite{Arthur} method is being used in our algorithm. $c$ is the number of clusters per label that needs to be predefined. After clustering, we only keep the center points of the clusters to denote original data records. By doing so, the points with similar attribute values are grouped into one point. This can not only reducing the number of points, but also remove the influence of outlier points in clusters. The grouped points can be stored in memory, since the size of each label is a fixed value. The memory consumption can be limited to a reasonable size. 
+	Based on \textit{Lemma~\ref{lemma}}, we can use a clustering method to reduce the number of points that need to be stored in memory. Center points of clusters can be regard as representative of original points in the same cluster. The main steps are listed in \textit{Algorithm~\ref{algorithm:clustering}}. We gather the record into the current partition buffer, and perform data reduction once the buffer is full. Data reduction is being performed by a clustering method, specifically, the KMeans++\cite{Arthur} method is being used in our algorithm. $c$ is the number of clusters per label that needs to be predefined. After clustering, we only keep the center points of the clusters to denote original data records. By doing so, the points with similar attribute values are grouped into one point. This can not only reducing the number of points, but also remove the influence of outlier points in clusters. The grouped points can be stored in memory, since the size of each label is a fixed value. The memory consumption can be limited to a reasonable size. 
 	
 	\subsection{Complexity Analysis}
 	
@@ -224,14 +223,15 @@
 	
 	For each record, the classification algorithm needs to calculate distance between each records in memory. Total number of records that need to be compared is $N \times c \times |L|$. The computational complexity for each record would be $O(N*c*|L|)$.
 	
-	In the records reduction phase. If the partition buffer is not full, incoming labeled data only needs to be appended to the tail of buffer, this takes $O(1)$ time. If the partition buffer is full, a clustering method needs to be processed. First, we need to group records with same labels together, this takes $O(w)$ time. Then, KMeans++ method is called to get cluster information. The complexity for KMeans++ is $O(w*c*t)$, where $t$ is the number of iterations. Since the clustering method only processed once the partition buffer is full. The average complexity for each incoming record would be $O(c*t)$.
+	In the records reduction phase, if the partition buffer is not full, incoming labelled data only need to be appended to the tail of the buffer, this takes $O(1)$ time. If the partition buffer is full, a clustering method needs to be processed. First, we need to group records with the same labels together, this takes $O(w)$ time. Then, the KMeans++ method is called to get the cluster information. The complexity for KMeans++ is $O(w*c*t)$, where $t$ is the number of iterations. Since the clustering method only processed once the partition buffer is full. The average complexity for each incoming record would be $O(c*t)$.
 	
 	\section{Experiments} \label{Experiments}
-	In this section, we present the experiments on sample data extracted from KDDCup'99. Other two online intrusion detection methods are evaluated as baselines. The experiment settings are introduced first, and some discussions about the results are given.
+
+	In this section, we present the experiments on sample data extracted from KDDCup'99. Two other online intrusion detection methods are evaluated as baselines. The experiment settings are introduced first, and some discussions about the results are given.
 	
 	\subsection{Experiment Settings}
 	
-	The dataset we are using is sampled from KDDCup'99 data set. There are 23 class labels and 22 of which are different kinds of intrusions. Among all the intrusion classes, some of them only have few data records. This dataset contains 42 features extracted from network sniffer data. We sampled 100,000 data records from 10 percent dataset. Timestamps are also attached to each record, with step 1 between each adjust records. We further use sequential scan to simulate the actual data stream. \textit{Table~\ref{table:dataset}} lists all the attributes contained in the dataset. Only 35 numeric values of them are used in our experiments.
+	The dataset we are using is sampled from KDDCup'99 data set. There are 23 class labels, 22 of which are different kinds of intrusions. Among all the intrusion classes, some of them only have few data records. This dataset contains 42 features extracted from network sniffer data. We sampled 100,000 data records from 10 percent dataset. Timestamps are also attached to each record, with step 1 between each adjust records. We further use sequential scan to simulate the actual data stream. \textit{Table~\ref{table:dataset}} lists all the attributes contained in the dataset. Only 35 numeric values of them are used in our experiments.
 
 	\begin{table}
 		\centering
@@ -298,14 +298,13 @@
 	\end{table} 
 	\subsection{Baseline methods}
 	
-	We implemented other two methods as comparison: windowed k-NN method and ECSMiner. Windowed k-NN is adapted from k-NN method, with a fixed window size. In the experiments, we use two sets of k-NN parameters: kNN-100 denotes the k-NN method with a window size 100 and $k$=1, kNN-200 denotes the k-NN method witn a window size 2000 and $k$=1. ECSMiner is implemented as described in \cite{Masud2011}. The parameter settings are following (the same as default values used in \cite{Masud2011}):
+	We implemented two other methods as comparison: windowed k-NN method and ECSMiner. Windowed k-NN is adapted from k-NN method, with a fixed window size. In the experiments, we use two sets of k-NN parameters: kNN-100 denotes the k-NN method with a window size 100 and $k$=1, kNN-200 denotes the k-NN method witn a window size 2000 and $k$=1. ECSMiner is implemented as described in \cite{Masud2011}. The parameter settings are following (the same as default values used in \cite{Masud2011}):
 	\begin{enumerate}
 		\item number of pseudo-points per classifier $K$ = 50
-		\item minimum number of instances required to declare novel class $q$ = 50
+		\item minimum number of instances required to declare a novel class $q$ = 50
 		\item model ensemble size $M$ = 6
 		\item chunk size $S$ = 2000
 	\end{enumerate}
-	
 	
 	\subsection{Evaluation}
 	
@@ -336,7 +335,7 @@
 	
 	\textit{Figure~\ref{fig:accuracy}} shows the accuracy of different algorithms. We can see that our algorithm has the best performance. Since our method group the records with same label together, this can help to identify classes with small number of records. Both our method and ECSMiner have better performance than kNN. This is because kNN can be easily influenced by outliers in the data stream.
 	
-	\textit{Figure~\ref{fig:time}} gives the time consumption. Among these methods, kNN has the minimum time consumption, since for each incoming data record, only the records that hold in the fixed size window need to be calculated. But when the window size becomes larger, the time kNN consumes goes larger as well. It's worth noticing that although our method perform better than ECSMiner in accuracy, we have slightly higher time consumption. This because we are treating different label separately during clustering, more iterations are introduced in this phase.
+	\textit{Figure~\ref{fig:time}} gives the time consumption. Among these methods, kNN has the minimum time consumption, since for each incoming data record, only the records that hold in the fixed size window need to be calculated. But when the window size becomes larger, the time kNN consumes grows larger as well. It is worth noticing that although our method perform better than ECSMiner in accuracy, we have slightly higher time consumption. This because we are treating different labels separately during clustering, more iterations are introduced in this phase.
 	
 	
 	\subsubsection{Varying $w$}
@@ -355,14 +354,12 @@
 			\caption{Time with different $w$}
 			\label{fig:time:w}
 		\end{minipage}%
-	\end{figure}
-	
+	\end{figure}	
 	\textit{Figure~\ref{fig:accuracy:w}} and \textit{Figure~\ref{fig:time:w}} show the accuracy and time consumption with varying $w$ separately. Too small $w$ can lead to poor performance, but it can also speed up the algorithm. After some fixed value, $w$ won't influence much on both the performance and time consumption. This is because larger $w$ means less clustering times, meanwhile, the number of records that clustering method needs to process also increases. 
 	
 	\subsubsection{Varying $k$}
-	
-	In comparison, different values of $k$ have less influence on both accuracy and time. \textit{Figure~\ref{fig:accuracy:k}} shows that larger $k$ values may lead to a worse accuracy at the beginning, but eventually, the overall performance won't differ much. Since $k$ value only being used in classification phase. When the number of total records is small, a smaller $k$ value would give us  better classification results.
-	
+	In comparison, different values of $k$ have less influence on both accuracy and time. \textit{Figure~\ref{fig:accuracy:k}} shows that larger $k$ values may lead to a worse accuracy at the beginning, but eventually, the overall performance won't differ much. Since $k$ value only being used in classification phase. When the number of total records is small, a smaller $k$ value would give us better classification results.
+
 	\begin{figure}
 		\centering
 		\begin{minipage}[t]{0.46\textwidth}
@@ -381,6 +378,7 @@
 	\end{figure}
 	\subsubsection{Varying $c$}
 	Different $c$ values means different number of clusters during point reducing phase. Smaller $c$ values can lead to faster speed during running, this can be verified from \textit{Figure~\ref{fig:time:c}}. \textit{Figure~\ref{fig:accuracy:c}} shows that if $c$ is too small, the accuracy could be very poor. This is because small $c$ value means less points after clustering. Since we're grouping records with same label together, some critical points in those labels which have larger number of records may be discarded. Classification result can be highly influenced by points in other labels. After a certain threshold, $c$ value won't influence much on accuracy.
+	
 	\begin{figure}
 		\centering
 		\begin{minipage}[t]{0.46\textwidth}
@@ -416,14 +414,17 @@
 			\label{fig:time:n}
 		\end{minipage}%
 	\end{figure}
+
 	\section{Conclusion and Future Works} \label{conclusion}
 	
 	\subsection{Conclusion}
+
 	In this paper, we present an online network intrusion detection system. Moreover, an online learning algorithm is given to classify incoming data records. Our method combines kNN and KMeans++ algorithms. We use kNN to make classification while using kMeans++ to clustering raw data records to reduce the total number of points. Through experiments, we can see that our method has better accuracy than ECSMiner, but takes longer time. Time consumption can be reduced by choosing different parameters. A influence of varying values for different parameters are given in the experiment analysis, which can be helpful for choosing parameter values in different scenarios.
 	
 	In general, most of the data mining algorithms are using one model to train and classify records with different labels. In our algorithm, we treat records with different labels separately, and use clustering method to reduce influence of outliers. This process can be regard as model ensemble. In stream data mining, since we want to learn most recent records incrementally, ensemble models can be very useful.
 	
 	\subsection{Future Works}
+
 	We believe that there are still many problems can be addressed in online intrusion detection systems. Future works can be done in the following direction:
 	\begin{enumerate}
 		\item Speed improvement. Based on this paper, stream clustering methods, such as StreamKM++\cite{Ackermann2012}, CluStream can further applied. Stream clustering methods usually take less time than traditional methods. New data structure and techniques can also be introduced to speed up the whole process.
@@ -438,12 +439,15 @@
 	
 	\appendix
 	\section{Appendix} \label{appendix}
+
 	\subsection{Dataset}
+
 	The KDDCup'99 dataset contains several data files. The one we used in our experiments named $kddcup.data\_10\_percent.gz$. Online dataset can be found through the following link:
 	
 	http://archive.ics.uci.edu/ml/machine-learning-databases/kddcup99-mld/
 	
 	\subsection{Programs}
+	
 	We implemented the experiments in python. The project contains two main modules:
 	\begin{enumerate}
 		\item \textit{tools}. This module contains preprocessing codes such as: normalization, feature selection, and result analysis tools.
