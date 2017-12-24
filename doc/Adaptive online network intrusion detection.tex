@@ -45,7 +45,7 @@
 	
 	Many data stream classification algorithms have been proposed to address two major challenges relating to data streams: infinite length and concept-drift. Data streams can run indefinitely and thus have infinite length. Therefore, a learning algorithm that requires multiple passes over a dataset would require infinite storage and training time \cite{Siboni2014}. Concept-drift, in which the underlying concept of the data changes over the time, requires that the algorithm periodically updates the model. For instance, changes in online user behaviour might result in changes to the network traffic data collected over time. These changes could impact the performance of our models if they are not updated accordingly. Some researchers have proposed some hybrid models to combine both offline and online data that address this issue \cite{Siboni2014}\cite{Masud2013}. 
 	
-	In this paper, we first present an overview of online network intrusion detection systems. Labels are used to identify different type of intrusions. We further propose a new online classification algorithm to improve the accuracy of results. Our technique involves both partitioning and data reduction. The rest of this paper organizes as follows: Section~\ref{related work} introduces related works. Section~\ref{Our Method} gives a detailed view of the method we proposed. Section~\ref{Experiments} then describes the data set and experiment evaluation. At last, section~\ref{conclusion} concludes with some future works that could be done.
+	In this paper, we first present an overview of online network intrusion detection systems. Labels are used to identify different type of intrusions. We further propose a new online classification algorithm to improve the accuracy of results. Our technique involves both partitioning and data reduction. The rest of this paper organizes as follows: \textit{Section~\ref{related work}} introduces related works. \textit{Section~\ref{Our Method}} gives a detailed view of the method we proposed. \textit{Section~\ref{Experiments}} then describes the data set and experiment evaluation. At last, \textit{Section~\ref{conclusion}} concludes with some future works that could be done.
 	
 	\section{Related Work} \label{related work}
 
@@ -88,7 +88,7 @@
 		\label{fig:overview}
 	\end{figure}
 	
-	First, an overview of our online network intrusion detection system is given in \textbf{Figure~\ref{fig:overview}}. The whole process contains three major parts, namely, feature extraction, normalization and online learning algorithm.
+	First, an overview of our online network intrusion detection system is given in \textit{Figure~\ref{fig:overview}}. The whole process contains three major parts, namely, feature extraction, normalization and online learning algorithm.
 	
 	To simplify the problem, we assume that after each classification result is reported, the correct label for that record can be obtained through user/system feedbacks. Thus, different labels can be used for various type of intrusions. Records with correct labels can be used as training stream, to further improve classification accuracy of the system online.
 	
@@ -332,9 +332,9 @@
 		\end{minipage}%
 	\end{figure}
 	
-	Figure~\ref{fig:accuracy} shows the accuracy of different algorithms. We can see that our algorithm has the best performance. Since our method group the records with same label together, this can help to identify classes with small number of records. Both our method and ECSMiner have better performance than kNN. This is because kNN can be easily influenced by outliers in the data stream.
+	\textit{Figure~\ref{fig:accuracy}} shows the accuracy of different algorithms. We can see that our algorithm has the best performance. Since our method group the records with same label together, this can help to identify classes with small number of records. Both our method and ECSMiner have better performance than kNN. This is because kNN can be easily influenced by outliers in the data stream.
 	
-	Figure~\ref{fig:time} gives the time consumption. Among these methods, kNN has the minimum time consumption, since for each incoming data record, only the records that hold in the fixed size window need to be calculated. But when the window size becomes larger, the time kNN consumes goes larger as well. It's worth noticing that although our method perform better than ECSMiner in accuracy, we have slightly higher time consumption. This because we are treating different label separately during clustering, more iterations are introduced in this phase.
+	\textit{Figure~\ref{fig:time}} gives the time consumption. Among these methods, kNN has the minimum time consumption, since for each incoming data record, only the records that hold in the fixed size window need to be calculated. But when the window size becomes larger, the time kNN consumes goes larger as well. It's worth noticing that although our method perform better than ECSMiner in accuracy, we have slightly higher time consumption. This because we are treating different label separately during clustering, more iterations are introduced in this phase.
 	
 	
 	\subsubsection{Varying $w$}
@@ -355,11 +355,11 @@
 		\end{minipage}%
 	\end{figure}
 	
-	Figure~\ref{fig:accuracy:w} and ~\ref{fig:time:w} show the accuracy and time consumption with varying $w$ separately. Too small $w$ can lead to poor performance, but it can also speed up the algorithm. After some fixed value, $w$ won't influence much on both the performance and time consumption. This is because larger $w$ means less clustering times, meanwhile, the number of records that clustering method needs to process also increases. 
+	\textit{Figure~\ref{fig:accuracy:w}} and \textit{Figure~\ref{fig:time:w}} show the accuracy and time consumption with varying $w$ separately. Too small $w$ can lead to poor performance, but it can also speed up the algorithm. After some fixed value, $w$ won't influence much on both the performance and time consumption. This is because larger $w$ means less clustering times, meanwhile, the number of records that clustering method needs to process also increases. 
 	
 	\subsubsection{Varying $k$}
 	
-	In comparison, different values of $k$ have less influence on both accuracy and time. Figure~\ref{fig:accuracy:k} shows that larger $k$ values may lead to a worse accuracy at the beginning, but eventually, the overall performance won't differ much. Since $k$ value only being used in classification phase. When the number of total records is small, a smaller $k$ value would give us  better classification results.
+	In comparison, different values of $k$ have less influence on both accuracy and time. \textit{Figure~\ref{fig:accuracy:k}} shows that larger $k$ values may lead to a worse accuracy at the beginning, but eventually, the overall performance won't differ much. Since $k$ value only being used in classification phase. When the number of total records is small, a smaller $k$ value would give us  better classification results.
 	
 	\begin{figure}
 		\centering
@@ -378,7 +378,7 @@
 		\end{minipage}%
 	\end{figure}
 	\subsubsection{Varying $c$}
-	Different $c$ values means different number of clusters during point reducing phase. Smaller $c$ values can lead to faster speed during running, this can be verified from figure~\ref{fig:time:c}. Figure~\ref{fig:accuracy:c} shows that if $c$ is too small, the accuracy could be very poor. This is because small $c$ value means less points after clustering. Since we're grouping records with same label together, some critical points in those labels which have larger number of records may be discarded. Classification result can be highly influenced by points in other labels. After a certain threshold, $c$ value won't influence much on accuracy.
+	Different $c$ values means different number of clusters during point reducing phase. Smaller $c$ values can lead to faster speed during running, this can be verified from \textit{Figure~\ref{fig:time:c}}. \textit{Figure~\ref{fig:accuracy:c}} shows that if $c$ is too small, the accuracy could be very poor. This is because small $c$ value means less points after clustering. Since we're grouping records with same label together, some critical points in those labels which have larger number of records may be discarded. Classification result can be highly influenced by points in other labels. After a certain threshold, $c$ value won't influence much on accuracy.
 	\begin{figure}
 		\centering
 		\begin{minipage}[t]{0.46\textwidth}
@@ -396,7 +396,7 @@
 		\end{minipage}%
 	\end{figure}
 	\subsubsection{Varying $N$}
-	Figure~\ref{fig:accuracy:n} shows that smaller the number of partitions we hold in memory, worse the accuracy is. $N$ can be regard as one of the most important parameters in this algorithm, since it can have big impacts on time consumption (figure~\ref{fig:time:n}). Normally, $N$ should be chosen according to different scenarios. Large $N$ can lead to slow adaption phases, while algorithm with small $N$ value can be highly adapted to data drift.
+	\textit{Figure~\ref{fig:accuracy:n}} shows that smaller the number of partitions we hold in memory, worse the accuracy is. $N$ can be regard as one of the most important parameters in this algorithm, since it can have big impacts on time consumption (\textit{Figure~\ref{fig:time:n}}). Normally, $N$ should be chosen according to different scenarios. Large $N$ can lead to slow adaption phases, while algorithm with small $N$ value can be highly adapted to data drift.
 	
 	\begin{figure}
 		\centering
