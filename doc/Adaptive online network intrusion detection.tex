@@ -219,7 +219,7 @@
 	
 	\subsection{Complexity Analysis}
 	
-	In the above algorithms, algorithm~\ref{algorithm:main} is the main algorithm, for each incoming record, two algorithms are called to perform classification and records reduction.
+	For each incoming record, two sub-algorithms are called to perform classification and records reduction.
 	
 	For each record, the classification algorithm needs to calculate distance between each records in memory. Total number of records that need to be compared is $N \times c \times |L|$. The computational complexity for each record would be $O(N*c*|L|)$.
 	
